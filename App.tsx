@@ -21,7 +21,7 @@ export default function CertificateUploader() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer my-super-secret-certify-token-998877', 
+          'Authorization': 'Bearer your-secret-token-here', // Make sure this matches the token in your .env file and backend
         },
         body: JSON.stringify({
           hash: hash,
@@ -46,7 +46,7 @@ export default function CertificateUploader() {
         method: 'POST', // Using POST to send the hash securely in the body
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer my-super-secret-certify-token-998877', 
+          'Authorization': 'Bearer your-secret-token-here', // Make sure this matches the token in your .env file and backend
         },
         body: JSON.stringify({ hash: hash }),
       });

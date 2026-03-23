@@ -22,7 +22,7 @@ async function connectToDatabase() {
 
   const client = new MongoClient(uri);
   await client.connect();
-  const db = client.db('Certify'); 
+  const db = client.db('NAME_OF_YOUR_DATABASE'); // Change this to your desired database name in MongoDB Atlas
   
   cachedDb = db;
   return db;
@@ -41,7 +41,7 @@ app.post('/api/save-hash', async (req, res) => {
     if (!pdfHash) return res.status(400).json({ message: 'PDF Hash is required' });
 
     const db = await connectToDatabase();
-    const collection = db.collection('saved_hashes');
+    const collection = db.collection('NAME_OF_YOUR_COLLECTION'); // Change this to your desired collection name in MongoDB Atlas
 
     const previousBlock = await collection.findOne({}, { sort: { _id: -1 } });
     const previousHash = previousBlock ? previousBlock.blockHash : "0000000000000000000000000000000000000000000000000000000000000000";
