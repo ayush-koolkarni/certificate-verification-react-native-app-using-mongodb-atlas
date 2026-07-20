@@ -13,7 +13,7 @@ export default function CertificateUploader() {
   const [verificationResult, setVerificationResult] = useState('');
 
   const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; 
-  const BACKEND_BASE_URL = 'http://YOUR_IP:3000/api'; //MAKE SURE TO CHANGE THIS TO YOUR LOCAL IP ADDRESS
+  const BACKEND_BASE_URL = 'http://10.20.2.169:3000/api'; //MAKE SURE TO CHANGE THIS TO YOUR LOCAL IP ADDRESS
 
   const saveHashToMongoDB = async (hash) => {
     try {
@@ -21,7 +21,7 @@ export default function CertificateUploader() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer your-secret-token-here', // Make sure this matches the token in your .env file and backend
+          'Authorization': 'Bearer my-super-secret-certify-token-998877', // Make sure this matches the token in your .env file and backend
         },
         body: JSON.stringify({
           hash: hash,
@@ -46,7 +46,7 @@ export default function CertificateUploader() {
         method: 'POST', // Using POST to send the hash securely in the body
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer your-secret-token-here', // Make sure this matches the token in your .env file and backend
+          'Authorization': 'Bearer my-super-secret-certify-token-998877', // Make sure this matches the token in your .env file and backend
         },
         body: JSON.stringify({ hash: hash }),
       });
