@@ -50,6 +50,13 @@ app.post('/api/save-hash', async (req, res) => {
       return res.status(409).json({ message: 'Certificate already secured' });
     }
 
+    // Check if this certificate is already on the blockchain
+    const isDuplicate = await collection.findOne({ pdfHash: pdfHash });
+    if (isDuplicate) {
+      console.log(`⚠️ UPLOAD REJECTED: Certificate already exists on the chain.`);
+      return res.status(409).json({ message: 'Certificate already secured' });
+    }
+    
     const previousBlock = await collection.findOne({}, { sort: { _id: -1 } });
     const previousHash = previousBlock ? previousBlock.blockHash : "0000000000000000000000000000000000000000000000000000000000000000";
 
@@ -110,11 +117,8 @@ app.post('/api/verify-hash', async (req, res) => {
       console.log(`   └─ Status: 100% Authentic`);
       return res.status(200).json({ isLegitimate: true });
     } else {
-      // If we hit this block, the document exists in the database, but it was tampered with!
-      console.log(`\n🚨 BLOCKCHAIN ALERT: Data tampering detected in database!`);
-      console.log(`   ├─ Expected: ${existingRecord.blockHash.substring(0, 15)}...`);
-      console.log(`   └─ Actual:   ${recalculatedBlockHash.substring(0, 15)}...`);
-      return res.status(200).json({ isLegitimate: false });
+      console.log(`\n🚨 VERIFICATION FAILED: Certificate tampered with or not in database.`);
+      return res.status(200).json({ isLegitimate: false }); 
     }
 
   } catch (error) {
