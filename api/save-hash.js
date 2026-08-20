@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const app = express();
 const PORT = 3000;
 
-app.use(cors()); 
+app.use(cors());
 app.use(express.json()); 
 
 let cachedDb = null;
@@ -42,13 +42,6 @@ app.post('/api/save-hash', async (req, res) => {
 
     const db = await connectToDatabase();
     const collection = db.collection('saved_hashes'); // Change this to your desired collection name in MongoDB Atlas
-
-    // Check if this certificate is already on the blockchain
-    const isDuplicate = await collection.findOne({ pdfHash: pdfHash });
-    if (isDuplicate) {
-      console.log(`⚠️ UPLOAD REJECTED: Certificate already exists on the chain.`);
-      return res.status(409).json({ message: 'Certificate already secured' });
-    }
 
     // Check if this certificate is already on the blockchain
     const isDuplicate = await collection.findOne({ pdfHash: pdfHash });
